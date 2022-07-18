@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 import com.afarma.mqtt.dto.EquipamentMessage;
+import com.afarma.mqtt.dto.PublishMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,7 +26,9 @@ public class MQTTConfig {
 		
 		String topic = "device_in";
 
-		ByteBuffer bb = StandardCharsets.UTF_8.encode(payload.toString());
+		PublishMsg msg = new PublishMsg(payload.getSlotId());
+
+		ByteBuffer bb = StandardCharsets.UTF_8.encode(msg.toString());
 		PublishRequest publishRequest = new PublishRequest();
 		publishRequest.withPayload(bb);
 		publishRequest.withTopic(topic);
